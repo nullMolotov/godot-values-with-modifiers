@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://1ntpwbqc6wqm"]
+
+[ext_resource type="Script" path="res://addons/value_with_modifiers/editor/float_with_modifiers/modified_value_panel.gd" id="1_j376u"]
+
+[node name="ModifiedValuePanel" type="PanelContainer"]
+offset_right = 291.0
+offset_bottom = 40.0
+script = ExtResource("1_j376u")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Modified Value"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+tooltip_text = "Result of base value with all enabled modifiers applied"
+editable = false
+expand_to_text_length = true

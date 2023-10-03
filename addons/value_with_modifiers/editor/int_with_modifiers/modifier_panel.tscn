@@ -1,0 +1,131 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbplj7k6y632v"]
+
+[ext_resource type="Script" path="res://addons/value_with_modifiers/editor/int_with_modifiers/modifier_panel.gd" id="1_ro1p0"]
+[ext_resource type="Texture2D" uid="uid://bvtqaj2r4ickw" path="res://addons/value_with_modifiers/editor/multiply.svg" id="3_k5bks"]
+[ext_resource type="Script" path="res://addons/value_with_modifiers/editor/float_with_modifiers/operation_button.gd" id="3_mrt2q"]
+
+[node name="ModifierPanel" type="PanelContainer"]
+self_modulate = Color(0.509804, 0.509804, 0.509804, 1)
+offset_right = 477.0
+offset_bottom = 295.0
+script = ExtResource("1_ro1p0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ModifierList" type="ItemList" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ModifierPanel" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="NewModifierPanel" type="VBoxContainer" parent="HBoxContainer/ModifierPanel"]
+layout_mode = 2
+size_flags_horizontal = 8
+auto_translate = false
+alignment = 1
+
+[node name="DeselectButton" type="Button" parent="HBoxContainer/ModifierPanel/NewModifierPanel"]
+layout_mode = 2
+size_flags_horizontal = 8
+disabled = true
+text = "Deselect"
+
+[node name="MainLabel" type="Label" parent="HBoxContainer/ModifierPanel/NewModifierPanel"]
+layout_mode = 2
+text = "Add/Set Modifier"
+horizontal_alignment = 1
+
+[node name="Name" type="HFlowContainer" parent="HBoxContainer/ModifierPanel/NewModifierPanel"]
+layout_mode = 2
+auto_translate = false
+alignment = 1
+
+[node name="Label" type="Label" parent="HBoxContainer/ModifierPanel/NewModifierPanel/Name"]
+layout_mode = 2
+size_flags_horizontal = 8
+auto_translate = false
+text = "Name"
+
+[node name="LineEdit" type="LineEdit" parent="HBoxContainer/ModifierPanel/NewModifierPanel/Name"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Modifier's Name."
+text = "new_modifier"
+alignment = 1
+
+[node name="ValueAndEnabled" type="HBoxContainer" parent="HBoxContainer/ModifierPanel/NewModifierPanel"]
+layout_mode = 2
+
+[node name="Operation" type="Button" parent="HBoxContainer/ModifierPanel/NewModifierPanel/ValueAndEnabled"]
+layout_mode = 2
+size_flags_vertical = 8
+auto_translate = false
+tooltip_text = "Add: Modifier will be applied to modified_value with a addition operation
+Multiply: Modifier will be applied to modified_value with a multiply operation."
+icon = ExtResource("3_k5bks")
+script = ExtResource("3_mrt2q")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/ModifierPanel/NewModifierPanel/ValueAndEnabled"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/ModifierPanel/NewModifierPanel/ValueAndEnabled/VBoxContainer"]
+layout_mode = 2
+auto_translate = false
+text = "Value"
+
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer/ModifierPanel/NewModifierPanel/ValueAndEnabled/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Modifier's Value."
+step = 0.01
+value = 1.0
+allow_greater = true
+allow_lesser = true
+
+[node name="EnabledLabel" type="Label" parent="HBoxContainer/ModifierPanel/NewModifierPanel/ValueAndEnabled"]
+layout_mode = 2
+text = "Enabled"
+
+[node name="EnabledCheckBox" type="CheckBox" parent="HBoxContainer/ModifierPanel/NewModifierPanel/ValueAndEnabled"]
+layout_mode = 2
+tooltip_text = "Enable/Disable Modifier.
+Modifiers can be enabled/disabled at runtime using modifier_set_enabled(),  modifier_on() and modifier_off() "
+
+[node name="OperationAndPriority" type="HBoxContainer" parent="HBoxContainer/ModifierPanel/NewModifierPanel"]
+layout_mode = 2
+auto_translate = false
+
+[node name="PriorityLabel" type="Label" parent="HBoxContainer/ModifierPanel/NewModifierPanel/OperationAndPriority"]
+layout_mode = 2
+text = "Priority"
+
+[node name="SpinBox" type="SpinBox" parent="HBoxContainer/ModifierPanel/NewModifierPanel/OperationAndPriority"]
+layout_mode = 2
+tooltip_text = "Modifier's priority in ascending order: Modifiers with a lower value will be applied first."
+allow_greater = true
+allow_lesser = true
+
+[node name="Buttons" type="HSplitContainer" parent="HBoxContainer/ModifierPanel/NewModifierPanel"]
+layout_mode = 2
+
+[node name="SetButton" type="Button" parent="HBoxContainer/ModifierPanel/NewModifierPanel/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Set modifier:
+if modifier already exists it will be set to the new values, if not it will be created."
+text = "Set Modifier"
+
+[node name="RemoveButton" type="Button" parent="HBoxContainer/ModifierPanel/NewModifierPanel/Buttons"]
+layout_mode = 2
+auto_translate = false
+disabled = true
+text = "Remove"
+
+[connection signal="item_selected" from="HBoxContainer/ModifierList" to="." method="_on_modifier_list_item_selected"]
+[connection signal="pressed" from="HBoxContainer/ModifierPanel/NewModifierPanel/DeselectButton" to="." method="_on_deselect_button_pressed"]
+[connection signal="text_submitted" from="HBoxContainer/ModifierPanel/NewModifierPanel/Name/LineEdit" to="." method="_on_line_edit_text_submitted"]
+[connection signal="pressed" from="HBoxContainer/ModifierPanel/NewModifierPanel/ValueAndEnabled/Operation" to="HBoxContainer/ModifierPanel/NewModifierPanel/ValueAndEnabled/Operation" method="_on_pressed"]
+[connection signal="pressed" from="HBoxContainer/ModifierPanel/NewModifierPanel/Buttons/SetButton" to="." method="_on_set_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/ModifierPanel/NewModifierPanel/Buttons/RemoveButton" to="." method="_on_remove_button_pressed"]

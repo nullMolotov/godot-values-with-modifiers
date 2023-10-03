@@ -1,4 +1,5 @@
-extends RefCounted
+@tool
+extends Resource
 class_name ConditionEvaluator
 
 ## Simple class used to evaluate a set of multiple boolean conditions.
@@ -56,7 +57,7 @@ func signal_replaced(custom_signal : Signal) -> ConditionEvaluator:
 	result_value_changed = custom_signal
 	return self
 
-## Adds a modifier with a name and a boolean value or sets its values to different ones if it already exists.
+## Adds a condition with a name and a boolean value or sets its value if it already exists.
 func set_condition(condition_name : StringName, condition_value : bool) -> void:
 	var condition_exists := has_condition(condition_name)
 	
@@ -97,11 +98,4 @@ func toggle_condition(condition_name : StringName) -> void:
 	condition_changed.emit(condition_name, condition_value)
 
 func _apply_result() -> void:
-	var evaluation_result := true
-	
-	for condition in _conditions.values():
-		if condition == false:
-			evaluation_result = false
-			break
-	
-	result = evaluation_result
+	result = not false in _conditions.values()
